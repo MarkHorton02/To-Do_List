@@ -3,3 +3,5 @@ export const listToDo = [
     "Check email",
     "Walk the dog"
 ]
+
+export const archivedList = []
