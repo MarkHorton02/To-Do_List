@@ -6,8 +6,8 @@ const ToDo = (props) => {
   return (
     <div>
       <p>{props.listObj}</p>
-      <button onClick={() => props.completedFunc(props.listObj)}>Move to Completed</button>
-      <button onClick={() => props.deleteFunc(props.listObj)}>Delete</button>
+      <button className="button" onClick={() => props.completedFunc(props.listObj)}>Move to Completed</button>
+      <button className="button" onClick={() => props.deleteFunc(props.listObj)}>Delete</button>
     </div>
   );
 };
@@ -16,7 +16,7 @@ const Completed = ({completedObj, removeFunc}) => {
   return(
     <div>
       <p>{completedObj}</p>
-      <button id="button" onClick={removeFunc}>X</button>
+      <button className="button" onClick={removeFunc}>Delete</button>
     </div>
   );
 };
@@ -48,35 +48,26 @@ const App = () => {
 
   return (
     <div className="container">
-      <h1 className="title">To-Do List</h1>
+      <div className="grid-container">
+        <div className="grid-item">
+          <h1 className="title">To-Do List</h1>
+        </div>
 
-      <div>
-        <input
-          type="text"
-          value={newItem}
-          onChange={(e) => setNewItem(e.target.value)}
-          placeholder="Add a new item"
-        />
-        <button onClick={handleAddItem}>Add</button>
-      </div>
+        <div className="grid-item">
+          <h2 className="subheading">To-Do</h2>
+          <input type="text" className="inputBox" value={newItem} onChange={(e) => setNewItem(e.target.value)} placeholder="Add a new item"/>
+          <button className="button" onClick={handleAddItem}>Add</button>
+          {active.map((listInfo, index) => (
+            <ToDo key={index} listObj={listInfo} completedFunc={handleAddToCompleted} deleteFunc={handleDeleteFromActive}/>
+          ))}
+        </div>
 
-      <div>
-        <h2>To-Do</h2>
-        {active.map((listInfo, index) => (
-          <ToDo
-            key={index}
-            listObj={listInfo}
-            completedFunc={handleAddToCompleted}
-            deleteFunc={handleDeleteFromActive}
-          />
-        ))}
-      </div>
-
-      <div>
-        <h2>Completed</h2>
-        {completed.map((completedInfo, index) => (
-          <Completed key={index} completedObj={completedInfo} removeFunc={() => handleRemove(completedInfo)} />
-        ))}
+        <div className="grid-item">
+          <h2>Completed</h2>
+          {completed.map((completedInfo, index) => (
+            <Completed key={index} completedObj={completedInfo} removeFunc={() => handleRemove(completedInfo)}/>
+          ))}
+        </div>
       </div>
     </div>
   );
